@@ -1,13 +1,13 @@
 variable "name" {
   description = "Unique identifier for the user"
   type        = string
-  default     = "wtc-bg"          # to replace
+  default     = "wtc-bg" # to replace
 }
 
 variable "vpc_id" {
   description = "Virtural Private Cloud ID"
   type        = string
-  default     = "wtc-eom2-vpc"          # to replace
+  default     = "wtc-eom2-vpc" # to replace
 }
 
 variable "enable_blue_env" {
