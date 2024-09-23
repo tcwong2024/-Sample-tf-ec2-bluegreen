@@ -49,9 +49,9 @@ jobs:
 
       - name: Test Load Balancer
         run: |
-          LB_DNS=$(terraform output -raw lb_dns_name)
+          LB_DNS=$(terraform output -raw lb_dns_name | tr -d '[:space:]')  # Trim whitespace
           for i in $(seq 1 10); do
             echo "Request #$i to $LB_DNS"
-            RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $LB_DNS)
+            RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" "$LB_DNS")
             echo "Response Code: $RESPONSE"
           done
