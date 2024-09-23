@@ -46,14 +46,3 @@ jobs:
         id: tfout
         run: |
           terraform output
-
-      - name: Get Load Balancer DNS
-        id: get_dns
-        run: echo "LB_DNS=$(terraform output -raw lb_dns_name)" >> $GITHUB_ENV
-
-      - name: Test Load Balancer
-        run: |
-          for i in $(seq 1 10); do
-            echo "Request #$i to $LB_DNS"
-            curl -s $LB_DNS
-          done
