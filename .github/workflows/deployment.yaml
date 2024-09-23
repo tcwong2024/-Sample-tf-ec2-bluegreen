@@ -6,6 +6,10 @@ on:
 jobs:
   CD:
     runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1  # Define your AWS region here
+      
     steps:
     - name: Checkout
       uses: actions/checkout@v3
