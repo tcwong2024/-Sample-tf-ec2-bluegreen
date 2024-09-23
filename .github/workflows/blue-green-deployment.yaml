@@ -1,0 +1,51 @@
+name: Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      traffic_distri_opt:
+        description: "Choose your traffic distribution : "
+        required: true
+        default: "blue"
+        type: choice
+        options:
+          - blue
+          - blue-90
+          - split
+          - green-90
+          - green
+
+jobs:
+  CD:
+    runs-on: ubuntu-latest
+
+    env:
+      AWS_REGION: us-east-1 # Define your AWS region here
+
+    steps:
+      - name: Print selected traffic distribution
+        run: echo "Your traffic distribution is ${{ github.event.inputs.traffic_distri_opt }}"
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+
+      - name: Terraform Init
+        run: terraform init
+
+      - name: Terraform Apply
+        run: terraform apply -var "traffic_distribution=${{ github.event.inputs.traffic_distri_opt }}" -no-color -auto-approve
+
+      - name: Export terraform outputs
+        id: tfout
+        run: |
+          terraform output
