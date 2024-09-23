@@ -7,7 +7,7 @@ variable "name" {
 variable "vpc_id" {
   description = "Virtural Private Cloud ID"
   type        = string
-  default     = "wtc-eom2-vpc" # to replace
+  default     = "vpc-0aaf3520930a03b5d" # vpc id for wtc-eom2-vpc
 }
 
 variable "enable_blue_env" {
