@@ -23,9 +23,6 @@ jobs:
       AWS_REGION: us-east-1 # Define your AWS region here
 
     steps:
-      - name: Print selected traffic distribution
-        run: echo "Your traffic distribution is ${{ github.event.inputs.traffic_distri_opt }}"
-
       - name: Checkout
         uses: actions/checkout@v3
 
