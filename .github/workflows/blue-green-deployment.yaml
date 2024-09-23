@@ -49,6 +49,8 @@ jobs:
 
       - name: Test Load Balancer
         run: |
+          LB_DNS=$(terraform output -raw lb_dns_name)  
           for i in $(seq 1 10); do
-            curl $(terraform output -raw lb_dns_name);
+            echo "Request #$i to $LB_DNS"
+            curl -s $LB_DNS
           done
