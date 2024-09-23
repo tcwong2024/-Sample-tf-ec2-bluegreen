@@ -46,3 +46,12 @@ jobs:
         id: tfout
         run: |
           terraform output
+
+      - name: Test Load Balancer
+        run: |
+          LB_DNS=$(terraform output -raw lb_dns_name)
+          for i in $(seq 1 10); do
+            echo "Request #$i to $LB_DNS"
+            RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" $LB_DNS)
+            echo "Response Code: $RESPONSE"
+          done
